@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcf0e64ce5305fcb6bdd425b0a3c9764",
+    "content-hash": "7edb9d8f9a322dd5365ec089a004d2d6",
     "packages": [
+        {
+            "name": "admad/cakephp-sequence",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ADmad/cakephp-sequence.git",
+                "reference": "da79b2255efc697413c8a3fbe22d225c6337adaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ADmad/cakephp-sequence/zipball/da79b2255efc697413c8a3fbe22d225c6337adaa",
+                "reference": "da79b2255efc697413c8a3fbe22d225c6337adaa",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/orm": "^4.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp": "^4.0",
+                "phpunit/phpunit": "~8.5.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "ADmad\\Sequence\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Sequence plugin for CakePHP to maintain ordered list of records",
+            "keywords": [
+                "cakephp",
+                "list",
+                "orm",
+                "sequence"
+            ],
+            "support": {
+                "issues": "https://github.com/ADmad/cakephp-sequence/issues",
+                "source": "https://github.com/ADmad/cakephp-sequence/tree/3.0.2"
+            },
+            "time": "2021-06-17T17:04:10+00:00"
+        },
         {
             "name": "cakephp/authentication",
             "version": "2.9.0",
