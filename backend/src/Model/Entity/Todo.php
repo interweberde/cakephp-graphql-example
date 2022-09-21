@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use TheCodingMachine\GraphQLite\Annotations\MagicField;
+use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * Todo Entity
@@ -18,6 +20,15 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\User $user
+ *
+ * @Type()
+ * @MagicField(name="id", outputType="ID!")
+ * @MagicField(name="sort_by", phpType="int")
+ * @MagicField(name="title", phpType="string")
+ * @MagicField(name="content", phpType="string")
+ * @MagicField(name="done", phpType="\Cake\I18n\FrozenTime|null")
+ * @MagicField(name="created", phpType="\Cake\I18n\FrozenTime")
+ * @MagicField(name="modified", phpType="\Cake\I18n\FrozenTime")
  */
 class Todo extends Entity
 {

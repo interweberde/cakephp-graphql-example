@@ -9,6 +9,8 @@ use Authorization\Policy\Exception\MissingPolicyException;
 use Authorization\Policy\ResultInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
+use Interweber\GraphQL\Annotation\FieldDependencies;
+use Interweber\GraphQL\Classes\UserInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\MagicField;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -26,13 +28,12 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @Type()
- * @MagicField(name="id", phpType="int")
  * @MagicField(name="email", phpType="string")
  * @MagicField(name="name", phpType="string")
  * @MagicField(name="created", phpType="\Cake\I18n\FrozenTime")
  * @MagicField(name="modified", phpType="\Cake\I18n\FrozenTime")
  */
-class User extends Entity implements \Authorization\IdentityInterface, \Authentication\IdentityInterface {
+class User extends Entity implements UserInterface {
 	/**
 	 * Fields that can be mass assigned using newEntity() or patchEntity().
 	 *
@@ -148,4 +149,32 @@ class User extends Entity implements \Authorization\IdentityInterface, \Authenti
 	public const FIELD_LAST_NAME = 'last_name';
 	public const FIELD_CREATED = 'created';
 	public const FIELD_MODIFIED = 'modified';
+
+	#[Field(outputType: "ID!")]
+	#[FieldDependencies(dependencies: ["uuid"])]
+	public function getId(): int {
+		return $this->id;
+	}
+
+	public function isAllowedTo(string $right): bool {
+		return false;
+	}
+
+	#[Field]
+	#[FieldDependencies(dependencies: ['first_name', 'last_name'])]
+	public function getFullName(): string {
+		// first_name and last_name are guaranteed to be fetched from database
+		return sprintf('%s %s', $this->first_name, $this->last_name);
+	}
+
+	// Look ma - no hands! Dependencies can also be applied on non-Field getters
+	#[FieldDependencies(dependencies: ['first_name', 'middle_name'])]
+	public function getFirstName(): string {
+		if (!$this->middle_name) {
+			return $this->first_name;
+		}
+
+		// first_name and last_name are guaranteed to be fetched from database
+		return sprintf('%s %s', $this->first_name, $this->middle_name);
+	}
 }
